@@ -1,4 +1,4 @@
-﻿# Navbar Component â€” Standalone Deploy
+﻿# Navbar Component Standalone Deploy
 
 Standalone deployment of the redesigned navbar component.
 
