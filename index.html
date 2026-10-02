@@ -10,10 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;1,400&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <script type="module" crossorigin src="/figma-make-redesigned-navbar-component/assets/index-_6VFXw6i.js"></script>
-  <link rel="stylesheet" crossorigin href="/figma-make-redesigned-navbar-component/assets/index-BwAF_sS8.css">
   <style>
-  /* Wrapper styles are class-scoped so Tailwind preflight from the React app cannot override them. */
   :root {
     --bg: #f7f6f3;
     --paper: #FAFAFA;
@@ -103,12 +100,12 @@
   }
   .howto-list li::marker { color: var(--accent); font-weight: 600; }
 
-  /* Demo frame: transform creates a containing block, so a fixed navbar inside the app stays inside the frame. */
+  /* Demo runs in an iframe: its own viewport, so fixed positioning, vw units and breakpoints refer to the frame. */
   .demo-frame {
-    position: relative; transform: translateZ(0); overflow: hidden;
+    overflow: hidden;
     border: 1px solid var(--border); border-radius: 8px; background: #ffffff;
   }
-  #root { min-height: 560px; }
+  .demo-frame iframe { display: block; width: 100%; height: 640px; border: 0; }
 
   .end-cta { background: var(--teal-bg); border-radius: 16px; padding: 2.8rem 2rem; text-align: center; margin-top: 2.5rem; }
   .end-cta-heading {
@@ -281,7 +278,8 @@
       <span class="card-subtitle" data-i18n="demo-sub">Rendered from the React build</span>
     </div>
     <div class="demo-frame">
-      <div id="root"></div>
+      <iframe src="/figma-make-redesigned-navbar-component/demo.html"
+              title="Live demo of the navbar" data-i18n-title="demo-iframe" loading="lazy"></iframe>
     </div>
   </section>
 
@@ -312,18 +310,23 @@
       'howto-3': '<strong>Review lesen</strong>: In der Case Study zeige ich, was Figma Make erzeugt hat und wie ich es bewertet habe.',
       'demo-title': 'Live-<em>Demo</em>',
       'demo-sub': 'Direkt aus dem React-Build',
+      'demo-iframe': 'Live-Demo der Navbar',
       'cta-h': 'So habe ich das Redesign <em>geprüft.</em>',
       'cta-sub': 'Vom Prompt in Figma Make bis zum React-Build: Die Case Study zeigt die KI-generierte Navbar und mein Design-Review dazu.',
       'cta-btn': 'Case Study lesen',
       'footer-title': 'Navbar-Redesign mit Figma Make',
       'footer-legal': 'Impressum & Datenschutz'
     };
-    var EN = {}, EN_ARIA = {};
+    var EN = {}, EN_ARIA = {}, EN_TITLE = {};
     document.querySelectorAll('[data-i18n]').forEach(function (el) {
       var k = el.getAttribute('data-i18n'); if (!(k in EN)) EN[k] = el.innerHTML;
     });
     document.querySelectorAll('[data-i18n-aria]').forEach(function (el) {
       EN_ARIA[el.getAttribute('data-i18n-aria')] = el.getAttribute('aria-label');
+    });
+
+    document.querySelectorAll('[data-i18n-title]').forEach(function (el) {
+      EN_TITLE[el.getAttribute('data-i18n-title')] = el.getAttribute('title');
     });
 
     window.switchLang = function (lang) {
@@ -336,6 +339,10 @@
       document.querySelectorAll('[data-i18n-aria]').forEach(function (el) {
         var k = el.getAttribute('data-i18n-aria');
         el.setAttribute('aria-label', lang === 'de' && DE[k] ? DE[k] : EN_ARIA[k]);
+      });
+      document.querySelectorAll('[data-i18n-title]').forEach(function (el) {
+        var k = el.getAttribute('data-i18n-title');
+        el.setAttribute('title', lang === 'de' && DE[k] ? DE[k] : EN_TITLE[k]);
       });
       document.documentElement.lang = lang;
       document.querySelectorAll('[data-lang]').forEach(function (b) {
