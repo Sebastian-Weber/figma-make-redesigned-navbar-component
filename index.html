@@ -38,6 +38,7 @@
     line-height: 1.5;
     margin: 0;
     padding: 72px 1.5rem 6rem;
+    overflow-x: clip;
     -webkit-font-smoothing: antialiased;
   }
 
@@ -69,6 +70,16 @@
     border-radius: 12px;
     padding: 1.6rem;
     margin-bottom: 2rem;
+  }
+
+  /* Demo card breaks out of the 820px wrapper so the navbar gets the width its viewport breakpoints expect. */
+  .demo-card {
+    width: calc(100vw - 3rem);
+    max-width: 1440px;
+    box-sizing: border-box;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   .card-header {
@@ -196,6 +207,7 @@
   @media (max-width: 560px) {
     .page-body { padding: 72px 1rem 4rem; }
     .card { padding: 1.1rem; }
+    .demo-card { width: calc(100vw - 2rem); }
   }
   </style>
 </head>
@@ -263,7 +275,7 @@
     </ol>
   </section>
 
-  <section class="card">
+  <section class="card demo-card">
     <div class="card-header">
       <h2 class="card-title" data-i18n="demo-title">Live <em>demo</em></h2>
       <span class="card-subtitle" data-i18n="demo-sub">Rendered from the React build</span>
